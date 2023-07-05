@@ -1,22 +1,22 @@
 name: CI
 
-on: [push]
+on: 
+  pull_request:
+    branches:    
+      - main
 
 jobs:
   Build:
-
     runs-on: ubuntu-latest
-    
     steps:
     - uses: actions/checkout@v1
-    
+
     - name: Build
       run: echo Build Complete..
 
   Test:
-
+    needs: Build
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v1
     
@@ -25,9 +25,8 @@ jobs:
 
 
   Deploy:
-
+    needs: [Build, Test]
     runs-on: ubuntu-latest
-    
     steps:
     - uses: actions/checkout@v1
 
